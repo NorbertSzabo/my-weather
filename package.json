@@ -1,0 +1,26 @@
+{
+  "name": "my-weather",
+  "version": "1.0.0",
+  "description": "weather forecast application ",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NorbertSzabo/my-weather.git"
+  },
+  "keywords": [
+    "weather",
+    "forecast"
+  ],
+  "author": "Szabo Norbert",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NorbertSzabo/my-weather/issues"
+  },
+  "homepage": "https://github.com/NorbertSzabo/my-weather#readme",
+  "devDependencies": {
+    "qunitjs": "^2.4.1"
+  }
+}
