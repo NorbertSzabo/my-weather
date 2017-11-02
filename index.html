@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyWeather</title>
+</head>
+<body>
+
+    <h3>My Weather</h3>
+    <hr>
+
+    <label>Location:
+        <input id="locationId" type="text" placeholder="Location" required >
+    </label>
+
+    <label>
+        <input id="countryId" type="text" placeholder="Country" required >
+    </label>
+
+    <input type="button" value="Show Weather" onclick="showWeatherOffline()">
+
+    <hr>
+    <span id="errorId"></span>
+
+    <span id="weatherId"></span>
+    <span id="weatherDetailsId"></span>
+    <span id="tempId"></span>
+    <span id="minTempId"></span>
+    <span id="maxTempId"></span>
+    <span id="pressureId"></span>
+    <span id="humidityId"></span>
+    <span id="windSpeedId"></span>
+    <span id="sunriseId"></span>
+    <span id="sunsetId"></span>
+
+
+    <script src="./mocks/weather_mock.js"></script>
+    <script>
+        const OPENWEATHER_API_BASE_URL='http://api.openweathermap.org/data/2.5/weather';
+        const OPENWEATHER_APPID = 'deb5474c3fbc4b5228a63b262c01af98';
+
+        function showWeatherOffline() {
+            updateWeatherArea(mock_weather);
+        }
+
+        function showWeather() {
+
+            const locationParam = 'q=' + document.getElementById('locationId').value;
+            const countryParam = ',' + document.getElementById('countryId').value;
+
+            // call the weather API
+            fetch(OPENWEATHER_API_BASE_URL + '?' + locationParam + countryParam + "&appid=" + OPENWEATHER_APPID, {
+                method:'get'
+            }).then(function(response) {
+
+                if (response.ok) {
+                    // update the result area
+                    response.json().then(function(data) {
+                        updateWeatherArea(data);
+                    });
+
+                } else {
+                    showError(response.status + ":" + response.statusText);
+                }
+
+            }).catch(function(error) {
+                showError(error);
+            });
+
+
+        }
+
+        function showError(message) {
+            document.getElementById('errorId').innerHTML = message;
+        }
+
+        function updateWeatherArea(data) {
+            document.getElementById('weatherId').innerHTML = data.weather[0].main;
+            document.getElementById('weatherDetailsId').innerHTML = data.weather[0].description;
+            document.getElementById('tempId').innerHTML = data.main.temp;
+            document.getElementById('minTempId').innerHTML = data.main.temp_min;
+            document.getElementById('maxTempId').innerHTML = data.main.temp_max;
+
+            document.getElementById('pressureId').innerHTML = data.main.pressure;
+            document.getElementById('humidityId').innerHTML = data.main.humidity;
+            document.getElementById('windSpeedId').innerHTML = data.wind.speed;
+            document.getElementById('sunriseId').innerHTML = data.sys.sunrise;
+            document.getElementById('sunsetId').innerHTML = data.sys.sunset;
+        }
+    </script>
+</body>
+</html>
